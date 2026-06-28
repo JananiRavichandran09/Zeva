@@ -1,0 +1,14 @@
+{
+  "name": "zeva",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Zeva - AI Work Assistant (monorepo)",
+  "scripts": {
+    "dev:web": "pnpm --filter frontend dev",
+    "build:web": "pnpm --filter frontend build",
+    "lint:web": "pnpm --filter frontend lint"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
