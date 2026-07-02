@@ -10,10 +10,11 @@ This folder contains the complete product planning and architecture documentatio
 
 ## How to read these docs
 
-Read in numeric order. Each document is self-contained but builds on the ones before it. By the end you will know **who every user is, what every screen does, where every piece of data comes from, and how every module fits together.**
+Start with the **implementation plan** if you want to start building immediately, or read the architecture docs in numeric order if you're learning the product design first.
 
 | # | Document | Purpose |
 |---|----------|---------|
+| **00** | **[End-to-End Plan](./00-end-to-end-plan.md)** | **Start here to build — step-by-step phases, install list, commands** |
 | 01 | [Product Vision](./01-product-vision.md) | Why Zeva exists, positioning, problem statement, and the coordination solution |
 | 02 | [Target Users & Personas](./02-target-users-and-personas.md) | Ideal Customer Profile and detailed user personas |
 | 03 | [Product Goals & KPIs](./03-product-goals-and-kpis.md) | Measurable product goals and success metrics |

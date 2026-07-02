@@ -1,0 +1,336 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Tenancy & Identity ─────────────────────────────────────────────────────
+
+model Organization {
+  id          String       @id @default(cuid())
+  name        String
+  slug        String       @unique
+  tenantId    String?      @unique  // Entra ID tenant (maps to Zeva org)
+  domain      String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  memberships   Membership[]
+  departments   Department[]
+  teams         Team[]
+  projects      Project[]
+  meetings      Meeting[]
+  calendarEvents CalendarEvent[]
+  tasks         Task[]
+  notifications Notification[]
+  recommendations Recommendation[]
+  integrations  Integration[]
+  auditLogs     AuditLog[]
+}
+
+model User {
+  id           String    @id @default(cuid())
+  entraUserId  String?   @unique   // stable key from Entra ID (idempotent sync)
+  name         String
+  email        String    @unique
+  passwordHash String?              // null for Entra-only accounts
+  jobTitle     String?
+  department   String?
+  photoUrl     String?
+  status       String    @default("active")  // active | inactive | invited
+  managerId    String?
+  manager      User?     @relation("Reports", fields: [managerId], references: [id])
+  reports      User[]    @relation("Reports")
+  resetToken   String?   @unique
+  resetExpires DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  memberships       Membership[]
+  assignedTasks     Task[]           @relation("TaskAssignee")
+  organizedMeetings Meeting[]        @relation("MeetingOrganizer")
+  calendarEvents    CalendarEvent[]
+  notifications     Notification[]
+  recommendations   Recommendation[]
+  teamMembers       TeamMember[]
+  actionItems       ActionItem[]     @relation("ActionItemOwner")
+  auditLogs         AuditLog[]
+
+  @@index([managerId])
+}
+
+model Membership {
+  id             String       @id @default(cuid())
+  userId         String
+  organizationId String
+  roleId         String
+  departmentId   String?
+  status         String       @default("active")  // active | invited | removed
+  createdAt      DateTime     @default(now())
+
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  role         Role         @relation(fields: [roleId], references: [id])
+  departmentR  Department?  @relation(fields: [departmentId], references: [id])
+
+  @@unique([userId, organizationId])
+  @@index([organizationId])
+}
+
+// ─── RBAC ───────────────────────────────────────────────────────────────────
+
+model Role {
+  id          String           @id @default(cuid())
+  key         String           @unique  // admin | manager | lead | developer | qa | hr
+  name        String
+  memberships Membership[]
+  permissions RolePermission[]
+}
+
+model Permission {
+  id    String           @id @default(cuid())
+  key   String           @unique  // e.g. "task:assign", "org:manage"
+  description String?
+  roles RolePermission[]
+}
+
+model RolePermission {
+  id           String     @id @default(cuid())
+  roleId       String
+  permissionId String
+  scope        String     // own | team | org
+
+  role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, permissionId])
+}
+
+// ─── Organization Structure ─────────────────────────────────────────────────
+
+model Department {
+  id             String       @id @default(cuid())
+  organizationId String
+  name           String
+  createdAt      DateTime     @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  teams        Team[]
+  memberships  Membership[]
+
+  @@unique([organizationId, name])
+}
+
+model Team {
+  id             String       @id @default(cuid())
+  organizationId String
+  departmentId   String?
+  managerId      String?
+  name           String
+  createdAt      DateTime     @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  department   Department?  @relation(fields: [departmentId], references: [id])
+  members      TeamMember[]
+
+  @@unique([organizationId, name])
+}
+
+model TeamMember {
+  id     String @id @default(cuid())
+  teamId String
+  userId String
+
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([teamId, userId])
+}
+
+// ─── Work ───────────────────────────────────────────────────────────────────
+
+model Project {
+  id             String   @id @default(cuid())
+  organizationId String
+  teamId         String?
+  name           String
+  key            String?          // e.g. "ZEVA"
+  description    String?
+  status         String   @default("active") // active | archived
+  sourceSystem   String?          // jira
+  sourceId       String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  tasks        Task[]
+
+  @@unique([sourceSystem, sourceId])
+  @@index([organizationId])
+}
+
+model Task {
+  id             String    @id @default(cuid())
+  organizationId String
+  projectId      String?
+  title          String
+  description    String?
+  assigneeId     String?
+  status         String    @default("todo")    // todo | in_progress | review | done
+  priority       String    @default("medium")  // low | medium | high | critical
+  dueDate        DateTime?
+  sourceSystem   String?
+  sourceId       String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  project      Project?     @relation(fields: [projectId], references: [id])
+  assignee     User?        @relation("TaskAssignee", fields: [assigneeId], references: [id])
+
+  @@unique([sourceSystem, sourceId])
+  @@index([organizationId])
+  @@index([assigneeId])
+  @@index([projectId])
+}
+
+model Meeting {
+  id             String   @id @default(cuid())
+  organizationId String
+  organizerId    String?
+  title          String
+  startsAt       DateTime
+  endsAt         DateTime
+  location       String?
+  agenda         String?
+  notes          String?
+  sourceSystem   String?
+  sourceId       String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organizer    User?        @relation("MeetingOrganizer", fields: [organizerId], references: [id])
+  actionItems  ActionItem[]
+
+  @@unique([sourceSystem, sourceId])
+  @@index([organizationId])
+}
+
+model ActionItem {
+  id          String  @id @default(cuid())
+  meetingId   String
+  description String
+  ownerId     String?
+  taskId      String?   // if converted to a Task
+  completed   Boolean @default(false)
+  createdAt   DateTime @default(now())
+
+  meeting Meeting @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+  owner   User?   @relation("ActionItemOwner", fields: [ownerId], references: [id])
+}
+
+model CalendarEvent {
+  id             String   @id @default(cuid())
+  organizationId String
+  userId         String
+  title          String
+  startsAt       DateTime
+  endsAt         DateTime
+  type           String   @default("meeting")  // meeting | focus | other
+  sourceSystem   String?
+  sourceId       String?
+  createdAt      DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([sourceSystem, sourceId])
+  @@index([organizationId])
+  @@index([userId])
+}
+
+// ─── Engagement & AI ────────────────────────────────────────────────────────
+
+model Notification {
+  id             String    @id @default(cuid())
+  organizationId String
+  userId         String
+  type           String             // assignment | mention | blocker | ai_recommendation
+  title          String
+  body           String?
+  readAt         DateTime?
+  createdAt      DateTime  @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([userId])
+}
+
+model Recommendation {
+  id             String   @id @default(cuid())
+  organizationId String
+  userId         String
+  kind           String           // daily_briefing | meeting_prep | task_action | focus_time
+  payload        Json             // AI-generated content
+  status         String   @default("shown")  // shown | accepted | snoozed | dismissed
+  createdAt      DateTime @default(now())
+  actedAt        DateTime?
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([userId])
+}
+
+// ─── Integrations ───────────────────────────────────────────────────────────
+
+model Integration {
+  id             String   @id @default(cuid())
+  organizationId String
+  provider       String           // entra_id | jira | outlook | github | teams | slack
+  status         String   @default("connected")  // connected | disconnected | error
+  tokensEncrypted String?         // encrypted OAuth tokens
+  connectedById  String?
+  lastSyncAt     DateTime?
+  createdAt      DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  syncLogs     SyncLog[]
+
+  @@unique([organizationId, provider])
+}
+
+model SyncLog {
+  id            String    @id @default(cuid())
+  integrationId String
+  startedAt     DateTime  @default(now())
+  finishedAt    DateTime?
+  status        String    @default("running") // running | success | failed
+  itemsSynced   Int       @default(0)
+  error         String?
+
+  integration Integration @relation(fields: [integrationId], references: [id], onDelete: Cascade)
+}
+
+model AuditLog {
+  id             String   @id @default(cuid())
+  organizationId String
+  actorUserId    String?
+  action         String          // e.g. "task:assign", "integration:connect", "ai:recommend"
+  target         String?         // entity type + id
+  source         String   @default("user")  // user | ai | system
+  metadata       Json?
+  createdAt      DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  actor        User?        @relation(fields: [actorUserId], references: [id])
+
+  @@index([organizationId])
+}

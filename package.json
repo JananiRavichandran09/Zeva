@@ -5,10 +5,21 @@
   "description": "Zeva - AI Work Coordination Platform (monorepo)",
   "scripts": {
     "dev:web": "pnpm --filter frontend dev",
+    "dev:api": "pnpm --filter backend start:dev",
     "build:web": "pnpm --filter frontend build",
-    "lint:web": "pnpm --filter frontend lint"
+    "build:api": "pnpm --filter backend build",
+    "lint:web": "pnpm --filter frontend lint",
+    "db:migrate": "pnpm --filter backend prisma migrate dev",
+    "db:generate": "pnpm --filter backend prisma generate",
+    "db:seed": "pnpm --filter backend prisma db seed",
+    "db:studio": "pnpm --filter backend prisma studio",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down"
   },
   "engines": {
     "node": ">=20"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^11.0.23"
   }
 }
