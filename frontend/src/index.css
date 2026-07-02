@@ -1,8 +1,79 @@
 @import "tailwindcss";
 
+/* Enable class-based dark mode: toggling `.dark` on <html> flips the theme. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ── Semantic color tokens ──────────────────────────────────────────────
+   Components use these (bg-canvas, bg-surface, text-fg, ...) instead of raw
+   colors, so light/dark switching happens in one place. */
+:root {
+  --canvas: #f8fafc; /* page background */
+  --surface: #ffffff; /* cards, navbar, sidebar */
+  --elevated: #f1f5f9; /* hover / subtle fills */
+  --line: #e8ebf2; /* borders */
+  --fg: #0f172a; /* primary text */
+  --muted: #64748b; /* secondary text */
+  --brand: #6c63ff; /* primary */
+  --brand-2: #8b5cf6; /* secondary */
+  --brand-fg: #ffffff; /* text on brand */
+  --accent: #3ddc97; /* success / positive accent */
+  --accent-fg: #053826; /* text on accent */
+}
+
+.dark {
+  --canvas: #0c0a14; /* deep violet-tinted ink */
+  --surface: #15121e; /* elevated surfaces */
+  --elevated: #1f1b2c; /* hover / subtle fills */
+  --line: #2a2438; /* borders */
+  --fg: #ece9f3; /* primary text */
+  --muted: #a59fb5; /* secondary text */
+  --brand: #8b5cf6; /* violet for contrast on dark */
+  --brand-2: #a78bfa;
+  --brand-fg: #ffffff;
+  --accent: #3ddc97;
+  --accent-fg: #053826;
+}
+
+/* Expose tokens to Tailwind as utilities (bg-canvas, text-fg, border-line...).
+   `inline` makes utilities reference the variable so .dark overrides apply. */
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-elevated: var(--elevated);
+  --color-line: var(--line);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-brand: var(--brand);
+  --color-brand-2: var(--brand-2);
+  --color-brand-fg: var(--brand-fg);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+
+  --radius: 16px;
+}
+
 html,
 body,
 #root {
   height: 100%;
   margin: 0;
+}
+
+body {
+  background-color: var(--canvas);
+  color: var(--fg);
+}
+
+/* Slim, modern scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: var(--line);
+  border-radius: 9999px;
 }
