@@ -1,0 +1,29 @@
+{
+  "type": "manager",
+  "team": {
+    "members": [
+      { "id": "usr_003", "name": "Janani", "photoUrl": null, "jobTitle": "Software Engineer" },
+      { "id": "usr_004", "name": "Rahul", "photoUrl": null, "jobTitle": "Senior Software Engineer" },
+      { "id": "usr_005", "name": "Priya", "photoUrl": null, "jobTitle": "Software Engineer" }
+    ],
+    "memberCount": 3
+  },
+  "tasks": {
+    "byStatus": {
+      "todo": 3,
+      "in_progress": 2,
+      "done": 1
+    },
+    "blockers": 1,
+    "lateTasks": 0
+  },
+  "meetings": [
+    {
+      "id": "mtg_001",
+      "title": "Sprint Planning",
+      "startsAt": "2026-07-03T05:00:00.000Z",
+      "endsAt": "2026-07-03T06:00:00.000Z",
+      "organizer": { "id": "usr_002", "name": "Karthik", "photoUrl": null }
+    }
+  ]
+}

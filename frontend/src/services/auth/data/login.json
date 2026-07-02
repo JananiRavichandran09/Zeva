@@ -1,0 +1,9 @@
+{
+  "user": {
+    "id": "usr_001",
+    "name": "Janani R",
+    "email": "jr@gmail.com"
+  },
+  "accessToken": "mock-access-token-admin",
+  "refreshToken": "mock-refresh-token-admin"
+}

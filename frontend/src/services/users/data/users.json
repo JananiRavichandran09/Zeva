@@ -1,0 +1,86 @@
+[
+  {
+    "id": "usr_001",
+    "name": "Janani R",
+    "email": "jr@gmail.com",
+    "jobTitle": "Founder",
+    "department": null,
+    "photoUrl": null,
+    "role": "admin",
+    "roleName": "Admin",
+    "managerId": null,
+    "status": "active"
+  },
+  {
+    "id": "usr_002",
+    "name": "Karthik",
+    "email": "karthik@cornerstone.dev",
+    "jobTitle": "Engineering Manager",
+    "department": "Engineering",
+    "photoUrl": null,
+    "role": "manager",
+    "roleName": "Manager",
+    "managerId": null,
+    "status": "active"
+  },
+  {
+    "id": "usr_003",
+    "name": "Janani",
+    "email": "janani@cornerstone.dev",
+    "jobTitle": "Software Engineer",
+    "department": "Engineering",
+    "photoUrl": null,
+    "role": "developer",
+    "roleName": "Developer",
+    "managerId": "usr_002",
+    "status": "active"
+  },
+  {
+    "id": "usr_004",
+    "name": "Rahul",
+    "email": "rahul@cornerstone.dev",
+    "jobTitle": "Senior Software Engineer",
+    "department": "Engineering",
+    "photoUrl": null,
+    "role": "developer",
+    "roleName": "Developer",
+    "managerId": "usr_002",
+    "status": "active"
+  },
+  {
+    "id": "usr_005",
+    "name": "Priya",
+    "email": "priya@cornerstone.dev",
+    "jobTitle": "Software Engineer",
+    "department": "Engineering",
+    "photoUrl": null,
+    "role": "developer",
+    "roleName": "Developer",
+    "managerId": "usr_002",
+    "status": "active"
+  },
+  {
+    "id": "usr_006",
+    "name": "Anand",
+    "email": "anand@cornerstone.dev",
+    "jobTitle": "QA Engineer",
+    "department": "QA",
+    "photoUrl": null,
+    "role": "qa",
+    "roleName": "QA",
+    "managerId": null,
+    "status": "active"
+  },
+  {
+    "id": "usr_007",
+    "name": "Meera",
+    "email": "meera@cornerstone.dev",
+    "jobTitle": "HR Manager",
+    "department": "HR",
+    "photoUrl": null,
+    "role": "hr",
+    "roleName": "HR",
+    "managerId": null,
+    "status": "active"
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "id": "usr_001",
+  "name": "Janani R",
+  "email": "jr@gmail.com",
+  "jobTitle": "Founder",
+  "photoUrl": null,
+  "memberships": [
+    {
+      "organizationId": "org_001",
+      "organizationName": "Cornerstone Technologies",
+      "role": "admin"
+    }
+  ]
+}

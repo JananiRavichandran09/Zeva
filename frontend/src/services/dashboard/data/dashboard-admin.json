@@ -1,0 +1,15 @@
+{
+  "type": "admin",
+  "org": {
+    "members": 7,
+    "departments": 4,
+    "teams": 1,
+    "projects": 1,
+    "integrations": 0
+  },
+  "tasks": {
+    "todo": 5,
+    "in_progress": 2,
+    "done": 1
+  }
+}

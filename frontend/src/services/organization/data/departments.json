@@ -1,0 +1,26 @@
+[
+  {
+    "id": "dept_001",
+    "organizationId": "org_001",
+    "name": "Engineering",
+    "_count": { "memberships": 4, "teams": 1 }
+  },
+  {
+    "id": "dept_002",
+    "organizationId": "org_001",
+    "name": "QA",
+    "_count": { "memberships": 1, "teams": 0 }
+  },
+  {
+    "id": "dept_003",
+    "organizationId": "org_001",
+    "name": "HR",
+    "_count": { "memberships": 1, "teams": 0 }
+  },
+  {
+    "id": "dept_004",
+    "organizationId": "org_001",
+    "name": "Product",
+    "_count": { "memberships": 0, "teams": 0 }
+  }
+]

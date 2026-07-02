@@ -1,0 +1,42 @@
+[
+  {
+    "id": "mtg_001",
+    "title": "Sprint Planning",
+    "startsAt": "2026-07-03T05:00:00.000Z",
+    "endsAt": "2026-07-03T06:00:00.000Z",
+    "location": "Conference Room A",
+    "agenda": "1. Review last sprint\n2. Plan next sprint\n3. Discuss blockers",
+    "organizer": { "id": "usr_002", "name": "Karthik", "photoUrl": null },
+    "_count": { "actionItems": 3 }
+  },
+  {
+    "id": "mtg_002",
+    "title": "Design Review",
+    "startsAt": "2026-07-04T09:00:00.000Z",
+    "endsAt": "2026-07-04T09:45:00.000Z",
+    "location": null,
+    "agenda": "Review new dashboard UI mockups and gather feedback",
+    "organizer": { "id": "usr_003", "name": "Janani", "photoUrl": null },
+    "_count": { "actionItems": 0 }
+  },
+  {
+    "id": "mtg_003",
+    "title": "1:1 with Karthik",
+    "startsAt": "2026-07-04T11:00:00.000Z",
+    "endsAt": "2026-07-04T11:30:00.000Z",
+    "location": "Teams",
+    "agenda": null,
+    "organizer": { "id": "usr_002", "name": "Karthik", "photoUrl": null },
+    "_count": { "actionItems": 1 }
+  },
+  {
+    "id": "mtg_004",
+    "title": "AI Architecture Discussion",
+    "startsAt": "2026-07-05T07:00:00.000Z",
+    "endsAt": "2026-07-05T08:00:00.000Z",
+    "location": "Conference Room B",
+    "agenda": "1. Intent Router design\n2. Domain AI services\n3. Voice integration plan",
+    "organizer": { "id": "usr_001", "name": "Janani R", "photoUrl": null },
+    "_count": { "actionItems": 0 }
+  }
+]

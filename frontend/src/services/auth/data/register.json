@@ -1,0 +1,9 @@
+{
+  "user": {
+    "id": "usr_new_001",
+    "name": "New User",
+    "email": "new@cornerstone.dev"
+  },
+  "accessToken": "mock-access-token-new",
+  "refreshToken": "mock-refresh-token-new"
+}

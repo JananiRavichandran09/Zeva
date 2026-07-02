@@ -1,0 +1,13 @@
+{
+  "id": "org_001",
+  "name": "Cornerstone Technologies",
+  "slug": "cornerstone",
+  "domain": "cornerstone.dev",
+  "counts": {
+    "members": 7,
+    "departments": 4,
+    "teams": 1,
+    "projects": 1,
+    "integrations": 0
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "type": "employee",
+  "tasks": [
+    {
+      "id": "task_001",
+      "title": "Set up NestJS backend",
+      "status": "done",
+      "priority": "high",
+      "dueDate": null,
+      "project": { "name": "Zeva MVP", "key": "ZEVA" }
+    },
+    {
+      "id": "task_002",
+      "title": "Implement auth module",
+      "status": "in_progress",
+      "priority": "high",
+      "dueDate": "2026-07-05T00:00:00.000Z",
+      "project": { "name": "Zeva MVP", "key": "ZEVA" }
+    },
+    {
+      "id": "task_007",
+      "title": "Implement voice assistant",
+      "status": "todo",
+      "priority": "high",
+      "dueDate": null,
+      "project": { "name": "Zeva MVP", "key": "ZEVA" }
+    }
+  ],
+  "meetings": [
+    {
+      "id": "mtg_001",
+      "title": "Sprint Planning",
+      "startsAt": "2026-07-03T05:00:00.000Z",
+      "endsAt": "2026-07-03T06:00:00.000Z",
+      "organizer": { "id": "usr_002", "name": "Karthik", "photoUrl": null }
+    }
+  ],
+  "recommendations": []
+}

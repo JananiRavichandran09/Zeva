@@ -1,0 +1,90 @@
+[
+  {
+    "id": "task_001",
+    "title": "Set up NestJS backend",
+    "description": "Scaffold NestJS modular monolith with Prisma, Redis, BullMQ",
+    "status": "done",
+    "priority": "high",
+    "dueDate": null,
+    "assignee": { "id": "usr_003", "name": "Janani", "photoUrl": null },
+    "project": { "id": "proj_001", "name": "Zeva MVP", "key": "ZEVA" },
+    "createdAt": "2026-06-28T10:00:00.000Z"
+  },
+  {
+    "id": "task_002",
+    "title": "Implement auth module",
+    "description": "Register, login, JWT issue/refresh, /auth/me, password hashing",
+    "status": "in_progress",
+    "priority": "high",
+    "dueDate": "2026-07-05T00:00:00.000Z",
+    "assignee": { "id": "usr_003", "name": "Janani", "photoUrl": null },
+    "project": { "id": "proj_001", "name": "Zeva MVP", "key": "ZEVA" },
+    "createdAt": "2026-06-29T10:00:00.000Z"
+  },
+  {
+    "id": "task_003",
+    "title": "Design RBAC guard",
+    "description": "Permission decorator + guard for role-based access control",
+    "status": "in_progress",
+    "priority": "medium",
+    "dueDate": "2026-07-06T00:00:00.000Z",
+    "assignee": { "id": "usr_004", "name": "Rahul", "photoUrl": null },
+    "project": { "id": "proj_001", "name": "Zeva MVP", "key": "ZEVA" },
+    "createdAt": "2026-06-29T11:00:00.000Z"
+  },
+  {
+    "id": "task_004",
+    "title": "Build dashboard API",
+    "description": "Role-aware dashboard endpoint (admin/manager/employee views)",
+    "status": "todo",
+    "priority": "medium",
+    "dueDate": "2026-07-08T00:00:00.000Z",
+    "assignee": { "id": "usr_005", "name": "Priya", "photoUrl": null },
+    "project": { "id": "proj_001", "name": "Zeva MVP", "key": "ZEVA" },
+    "createdAt": "2026-06-30T10:00:00.000Z"
+  },
+  {
+    "id": "task_005",
+    "title": "Write E2E tests",
+    "description": "End-to-end tests for auth and task flows",
+    "status": "todo",
+    "priority": "medium",
+    "dueDate": null,
+    "assignee": { "id": "usr_006", "name": "Anand", "photoUrl": null },
+    "project": { "id": "proj_001", "name": "Zeva MVP", "key": "ZEVA" },
+    "createdAt": "2026-07-01T10:00:00.000Z"
+  },
+  {
+    "id": "task_006",
+    "title": "Integrate Entra ID",
+    "description": "Microsoft Graph identity sync via IdentityProvider interface",
+    "status": "todo",
+    "priority": "high",
+    "dueDate": "2026-07-12T00:00:00.000Z",
+    "assignee": { "id": "usr_004", "name": "Rahul", "photoUrl": null },
+    "project": { "id": "proj_001", "name": "Zeva MVP", "key": "ZEVA" },
+    "createdAt": "2026-07-01T11:00:00.000Z"
+  },
+  {
+    "id": "task_007",
+    "title": "Implement voice assistant",
+    "description": "OpenAI Realtime API bridge for voice commands",
+    "status": "todo",
+    "priority": "high",
+    "dueDate": null,
+    "assignee": { "id": "usr_003", "name": "Janani", "photoUrl": null },
+    "project": { "id": "proj_001", "name": "Zeva MVP", "key": "ZEVA" },
+    "createdAt": "2026-07-01T12:00:00.000Z"
+  },
+  {
+    "id": "task_008",
+    "title": "Connect Jira integration",
+    "description": "Two-way project/task sync via Jira REST API or MCP",
+    "status": "todo",
+    "priority": "medium",
+    "dueDate": null,
+    "assignee": { "id": "usr_005", "name": "Priya", "photoUrl": null },
+    "project": { "id": "proj_001", "name": "Zeva MVP", "key": "ZEVA" },
+    "createdAt": "2026-07-01T13:00:00.000Z"
+  }
+]
