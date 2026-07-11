@@ -6,6 +6,6 @@ allowBuilds:
   '@prisma/engines': true
   esbuild: true
   msgpackr-extract: true
-  msw: set this to true or false
+  msw: true
   prisma: true
   unrs-resolver: true
