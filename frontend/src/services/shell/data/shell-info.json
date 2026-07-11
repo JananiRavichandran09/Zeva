@@ -1,0 +1,129 @@
+{
+  "profile": {
+    "userId": "usr_001",
+    "email": "jr@gmail.com",
+    "firstName": "Janani",
+    "lastName": "R",
+    "fullName": "Janani R",
+    "orgId": "org_001",
+    "avatar": {},
+    "jobTitle": "Founder",
+    "tenantId": "org_001",
+    "app": "ZEVA",
+    "userRoles": ["ROLE_ADMIN"],
+    "isManager": false
+  },
+
+  "menu": [
+    {
+      "id": "dashboard",
+      "label": "Dashboard",
+      "shape": "layout-dashboard",
+      "path": "/",
+      "featureFlag": "zeva.dashboard"
+    },
+    {
+      "id": "chat-ai",
+      "label": "Chat AI",
+      "shape": "bot",
+      "path": "/chat-ai",
+      "featureFlag": "zeva.chat_ai"
+    },
+    {
+      "id": "coordinator",
+      "label": "AI Coordinator",
+      "shape": "sparkles",
+      "path": "/coordinator",
+      "featureFlag": "zeva.coordinator"
+    },
+    {
+      "id": "calendar",
+      "label": "Calendar",
+      "shape": "calendar",
+      "path": "/calendar",
+      "featureFlag": "zeva.calendar"
+    },
+    {
+      "id": "meetings",
+      "label": "Meetings",
+      "shape": "video",
+      "path": "/meetings",
+      "featureFlag": "zeva.meetings"
+    },
+    {
+      "id": "tasks",
+      "label": "Tasks",
+      "shape": "list-checks",
+      "path": "/tasks",
+      "featureFlag": "zeva.tasks"
+    },
+    {
+      "id": "projects",
+      "label": "Projects",
+      "shape": "folder-kanban",
+      "path": "/projects",
+      "featureFlag": "zeva.projects"
+    },
+    {
+      "id": "team",
+      "label": "Team",
+      "shape": "users",
+      "path": "/team",
+      "featureFlag": "zeva.team"
+    },
+    {
+      "id": "documents",
+      "label": "Documents",
+      "shape": "file-text",
+      "path": "/documents",
+      "featureFlag": "zeva.documents"
+    },
+    {
+      "id": "analytics",
+      "label": "Analytics",
+      "shape": "bar-chart-3",
+      "path": "/analytics",
+      "featureFlag": "zeva.analytics"
+    },
+    {
+      "id": "notifications",
+      "label": "Notifications",
+      "shape": "bell",
+      "path": "/notifications",
+      "featureFlag": "zeva.notifications"
+    },
+    {
+      "id": "settings",
+      "label": "Settings",
+      "shape": "settings",
+      "path": "/settings",
+      "featureFlag": "zeva.settings"
+    }
+  ],
+
+  "preferences": {
+    "theme": "dark"
+  },
+
+  "features": {
+    "zeva.dashboard": true,
+    "zeva.chat_ai": true,
+    "zeva.coordinator": false,
+    "zeva.calendar": true,
+    "zeva.meetings": true,
+    "zeva.tasks": true,
+    "zeva.projects": false,
+    "zeva.team": true,
+    "zeva.documents": false,
+    "zeva.analytics": false,
+    "zeva.notifications": true,
+    "zeva.settings": false,
+    "zeva.voice_assistant": false,
+    "zeva.entra_id_sync": false,
+    "zeva.jira_integration": false,
+    "zeva.outlook_integration": false,
+    "zeva.github_integration": false
+  },
+
+  "onboardingComplete": true
+}
