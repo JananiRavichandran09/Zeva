@@ -17,32 +17,30 @@ import {
   ChevronRight,
 } from 'lucide-react'
 import { Tooltip } from '@/components/ui'
+import { useShell } from '@/app/ShellProvider'
 import type { LucideIcon } from 'lucide-react'
 
-type NavItem = {
-  to: string
-  label: string
-  icon: LucideIcon
+/** Map shape strings from shell-info.json to Lucide icons */
+const ICON_MAP: Record<string, LucideIcon> = {
+  'layout-dashboard': LayoutDashboard,
+  'bot': Bot,
+  'sparkles': Sparkles,
+  'calendar': Calendar,
+  'video': Video,
+  'list-checks': ListChecks,
+  'folder-kanban': FolderKanban,
+  'users': Users,
+  'file-text': FileText,
+  'bar-chart-3': BarChart3,
+  'bell': Bell,
+  'settings': Settings,
 }
-
-const navItems: NavItem[] = [
-  { to: '/', label: 'Dashboard', icon: LayoutDashboard },
-  { to: '/chat-ai', label: 'Chat AI', icon: Bot },
-  { to: '/coordinator', label: 'AI Coordinator', icon: Sparkles },
-  { to: '/calendar', label: 'Calendar', icon: Calendar },
-  { to: '/meetings', label: 'Meetings', icon: Video },
-  { to: '/tasks', label: 'Tasks', icon: ListChecks },
-  { to: '/projects', label: 'Projects', icon: FolderKanban },
-  { to: '/team', label: 'Team', icon: Users },
-  { to: '/documents', label: 'Documents', icon: FileText },
-  { to: '/analytics', label: 'Analytics', icon: BarChart3 },
-  { to: '/notifications', label: 'Notifications', icon: Bell },
-  { to: '/settings', label: 'Settings', icon: Settings },
-]
 
 const STORAGE_KEY = 'zeva.sidebar-collapsed'
 
 export default function Sidebar() {
+  const { menu } = useShell()
+
   const [collapsed, setCollapsed] = useState<boolean>(() => {
     if (typeof window === 'undefined') return false
     return window.localStorage.getItem(STORAGE_KEY) === 'true'
@@ -91,65 +89,57 @@ export default function Sidebar() {
         </button>
       </Tooltip>
 
-      {/* Nav */}
+      {/* Nav — driven by shell menu (already filtered by feature flags) */}
       <nav className="flex flex-1 flex-col gap-0.5 overflow-y-auto px-3 py-2">
-        {navItems.map((item) => (
-          <SidebarLink key={item.to} item={item} collapsed={collapsed} />
-        ))}
+        {menu.map((item) => {
+          const Icon = ICON_MAP[item.shape ?? ''] ?? LayoutDashboard
+          const path = item.path ?? '/'
+
+          const link = (
+            <NavLink
+              key={item.id}
+              to={path}
+              end={path === '/'}
+              className={({ isActive }) =>
+                [
+                  'group relative flex items-center rounded-xl py-2.5 text-sm font-medium transition-all duration-200',
+                  collapsed ? 'justify-center px-0' : 'gap-3 px-3',
+                  isActive
+                    ? 'bg-brand/10 text-brand'
+                    : 'text-muted hover:bg-elevated hover:text-fg',
+                ].join(' ')
+              }
+            >
+              {({ isActive }) => (
+                <>
+                  {isActive && (
+                    <span className="absolute left-0 top-1/2 h-5 w-1 -translate-y-1/2 rounded-r-full bg-brand" />
+                  )}
+                  <Icon
+                    size={19}
+                    strokeWidth={2}
+                    className={
+                      isActive
+                        ? 'text-brand'
+                        : 'text-muted transition-colors group-hover:text-fg'
+                    }
+                  />
+                  {!collapsed && <span className="truncate">{item.label}</span>}
+                </>
+              )}
+            </NavLink>
+          )
+
+          if (collapsed) {
+            return (
+              <Tooltip key={item.id} title={item.label} placement="right">
+                {link}
+              </Tooltip>
+            )
+          }
+          return <div key={item.id}>{link}</div>
+        })}
       </nav>
     </aside>
   )
-}
-
-function SidebarLink({
-  item,
-  collapsed,
-}: {
-  item: NavItem
-  collapsed: boolean
-}) {
-  const Icon = item.icon
-
-  const link = (
-    <NavLink
-      to={item.to}
-      end={item.to === '/'}
-      className={({ isActive }) =>
-        [
-          'group relative flex items-center rounded-xl py-2.5 text-sm font-medium transition-all duration-200',
-          collapsed ? 'justify-center px-0' : 'gap-3 px-3',
-          isActive
-            ? 'bg-brand/10 text-brand'
-            : 'text-muted hover:bg-elevated hover:text-fg',
-        ].join(' ')
-      }
-    >
-      {({ isActive }) => (
-        <>
-          {isActive && (
-            <span className="absolute left-0 top-1/2 h-5 w-1 -translate-y-1/2 rounded-r-full bg-brand" />
-          )}
-          <Icon
-            size={19}
-            strokeWidth={2}
-            className={
-              isActive
-                ? 'text-brand'
-                : 'text-muted transition-colors group-hover:text-fg'
-            }
-          />
-          {!collapsed && <span className="truncate">{item.label}</span>}
-        </>
-      )}
-    </NavLink>
-  )
-
-  if (collapsed) {
-    return (
-      <Tooltip title={item.label} placement="right">
-        {link}
-      </Tooltip>
-    )
-  }
-  return link
 }

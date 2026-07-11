@@ -10,6 +10,10 @@ import { OrganizationModule } from './modules/organization/organization.module';
 import { TasksModule } from './modules/tasks/tasks.module';
 import { MeetingsModule } from './modules/meetings/meetings.module';
 import { DashboardModule } from './modules/dashboard/dashboard.module';
+import { NotificationsModule } from './modules/notifications/notifications.module';
+import { RealtimeModule } from './realtime/realtime.module';
+import { CalendarModule } from './modules/calendar/calendar.module';
+import { AiModule } from './ai/ai.module';
 import { AppController } from './app.controller';
 
 @Module({
@@ -24,12 +28,20 @@ import { AppController } from './app.controller';
     TenancyModule,
     RbacModule,
 
+    // Realtime
+    RealtimeModule,
+
     // Feature modules
     UsersModule,
     OrganizationModule,
     TasksModule,
     MeetingsModule,
     DashboardModule,
+    NotificationsModule,
+    CalendarModule,
+
+    // AI
+    AiModule,
   ],
   controllers: [AppController],
 })

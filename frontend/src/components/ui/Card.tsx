@@ -53,7 +53,11 @@ export function Card({
         </div>
       )}
 
-      {children && <div className={noPadding ? '' : 'p-5'}>{children}</div>}
+      {children && (
+        <div className={noPadding ? 'flex min-h-0 flex-1 flex-col' : 'p-5'}>
+          {children}
+        </div>
+      )}
 
       {footer && (
         <div className="border-t border-line px-5 py-3">{footer}</div>

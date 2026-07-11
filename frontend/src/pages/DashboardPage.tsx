@@ -25,6 +25,17 @@ export default function DashboardPage() {
     )
   }
 
+  if (!data) {
+    return (
+      <div className="grid h-full place-items-center">
+        <div className="text-center">
+          <p className="text-lg font-semibold text-fg">No dashboard data</p>
+          <p className="mt-1 text-sm text-muted">Could not load your dashboard. Please try refreshing.</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="flex h-full flex-col gap-6 overflow-y-auto p-8">
       <PageHeader

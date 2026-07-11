@@ -4,6 +4,7 @@ import tasksHandlers from './tasks/mock'
 import usersHandlers from './users/mock'
 import meetingsHandlers from './meetings/mock'
 import organizationHandlers from './organization/mock'
+import shellHandlers from './shell/mock'
 
 /**
  * All MSW handlers for local development / testing.
@@ -16,6 +17,7 @@ export const handlers = [
   ...usersHandlers,
   ...meetingsHandlers,
   ...organizationHandlers,
+  ...shellHandlers,
 ]
 
 export default handlers

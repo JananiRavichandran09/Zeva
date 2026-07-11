@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import AppLayout from '@/components/layout/AppLayout'
 import ProtectedRoute from '@/components/ProtectedRoute'
+import { useFeatureFlag } from '@/app/ShellProvider'
 import LandingPage from '@/pages/LandingPage'
 import RegisterPage from '@/pages/RegisterPage'
 import LoginPage from '@/pages/LoginPage'
@@ -18,6 +19,14 @@ import AnalyticsPage from '@/pages/AnalyticsPage'
 import NotificationsPage from '@/pages/NotificationsPage'
 import SettingsPage from '@/pages/SettingsPage'
 import ProfilePage from '@/pages/ProfilePage'
+import type { ReactNode } from 'react'
+
+/** Route guard: renders children only if the feature flag is enabled, otherwise redirects to / */
+function FeatureRoute({ flag, children }: { flag: string; children: ReactNode }) {
+  const enabled = useFeatureFlag(flag)
+  if (!enabled) return <Navigate to="/" replace />
+  return <>{children}</>
+}
 
 export default function App() {
   return (
@@ -36,18 +45,21 @@ export default function App() {
           </ProtectedRoute>
         }
       >
+        {/* Dashboard is always available */}
         <Route index element={<DashboardPage />} />
-        <Route path="chat-ai" element={<ChatAIPage />} />
-        <Route path="coordinator" element={<CoordinatorPage />} />
-        <Route path="calendar" element={<CalendarPage />} />
-        <Route path="meetings" element={<MeetingsPage />} />
-        <Route path="tasks" element={<TasksPage />} />
-        <Route path="projects" element={<ProjectsPage />} />
-        <Route path="team" element={<TeamPage />} />
-        <Route path="documents" element={<DocumentsPage />} />
-        <Route path="analytics" element={<AnalyticsPage />} />
-        <Route path="notifications" element={<NotificationsPage />} />
-        <Route path="settings" element={<SettingsPage />} />
+
+        {/* Feature-flagged routes */}
+        <Route path="chat-ai" element={<FeatureRoute flag="zeva.chat_ai"><ChatAIPage /></FeatureRoute>} />
+        <Route path="coordinator" element={<FeatureRoute flag="zeva.coordinator"><CoordinatorPage /></FeatureRoute>} />
+        <Route path="calendar" element={<FeatureRoute flag="zeva.calendar"><CalendarPage /></FeatureRoute>} />
+        <Route path="meetings" element={<FeatureRoute flag="zeva.meetings"><MeetingsPage /></FeatureRoute>} />
+        <Route path="tasks" element={<FeatureRoute flag="zeva.tasks"><TasksPage /></FeatureRoute>} />
+        <Route path="projects" element={<FeatureRoute flag="zeva.projects"><ProjectsPage /></FeatureRoute>} />
+        <Route path="team" element={<FeatureRoute flag="zeva.team"><TeamPage /></FeatureRoute>} />
+        <Route path="documents" element={<FeatureRoute flag="zeva.documents"><DocumentsPage /></FeatureRoute>} />
+        <Route path="analytics" element={<FeatureRoute flag="zeva.analytics"><AnalyticsPage /></FeatureRoute>} />
+        <Route path="notifications" element={<FeatureRoute flag="zeva.notifications"><NotificationsPage /></FeatureRoute>} />
+        <Route path="settings" element={<FeatureRoute flag="zeva.settings"><SettingsPage /></FeatureRoute>} />
         <Route path="profile" element={<ProfilePage />} />
       </Route>
 

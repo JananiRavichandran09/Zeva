@@ -17,6 +17,11 @@ async function request<T>(url: string, options: RequestInit = {}): Promise<{ dat
   })
 
   if (!res.ok) {
+    if (res.status === 401) {
+      localStorage.removeItem('zeva.accessToken')
+      localStorage.removeItem('zeva.refreshToken')
+      window.location.href = '/login'
+    }
     const body = await res.json().catch(() => ({}))
     throw new Error((body as { message?: string }).message ?? `API error ${res.status}`)
   }
